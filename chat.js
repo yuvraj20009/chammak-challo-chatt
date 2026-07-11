@@ -17,6 +17,9 @@ import { renderMessages } from "../ui/renderMessages";
 import { renderOnline } from "../ui/renderOnline";
 import { renderTyping } from "../ui/renderTyping";
 import { enableImageViewer } from "./imageViewer";
+import { enableAdvancedReactions } from "./advancedReactions";
+import { enableContextMenu } from "./contextMenu";
+import { markMessageAsSeen } from "./seenStatus";
 
 export function startChat(roomCode) {
 
@@ -53,6 +56,10 @@ export function startChat(roomCode) {
     messageInput.focus();
 
     enableImageViewer();
+    
+    // Initialize new features
+    enableAdvancedReactions(roomCode, myName);
+    enableContextMenu(roomCode, myName);
 
     joinPresence(
         roomCode,
@@ -233,7 +240,7 @@ export function startChat(roomCode) {
 
     });
 
-    /* ---------------- LISTEN ---------------- */
+    /* ---------------- LISTEN & MARK AS SEEN ---------------- */
 
     listenMessages(roomCode, (messages) => {
 
@@ -251,4 +258,12 @@ export function startChat(roomCode) {
 
             messagesDiv.scrollHeight;
 
-    });}
+        // Mark messages as seen when they appear
+        messages.forEach((msg) => {
+            if (msg.sender !== myName) {
+                markMessageAsSeen(roomCode, msg.id, myName);
+            }
+        });
+
+    });
+}
