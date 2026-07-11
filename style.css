@@ -195,6 +195,13 @@ button:hover{
     border-radius:18px;
     padding:14px 18px;
     animation:pop .2s ease;
+    position:relative;
+    cursor:pointer;
+    transition:all 0.2s ease;
+}
+
+.message:hover{
+    box-shadow:0 4px 12px rgba(0,0,0,0.3);
 }
 
 .mineBubble{
@@ -227,6 +234,162 @@ button:hover{
 .text{
     line-height:1.5;
     word-break:break-word;
+}
+
+.editedBadge{
+    font-size:10px;
+    color:#aaa;
+    margin-left:4px;
+}
+
+/* ================= REPLIES ================= */
+
+.repliedTo{
+    display:flex;
+    gap:8px;
+    margin-bottom:10px;
+    padding:8px;
+    background:rgba(0,0,0,0.2);
+    border-radius:8px;
+    border-left:3px solid #ff2f68;
+}
+
+.replyLine{
+    width:2px;
+    background:#ff2f68;
+    flex-shrink:0;
+}
+
+.replyContent{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    min-width:0;
+}
+
+.replySender{
+    font-size:11px;
+    font-weight:bold;
+    color:#ffd4df;
+}
+
+.replyText{
+    font-size:12px;
+    color:#bbb;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+/* ================= REACTIONS ================= */
+
+.reactions{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    margin-top:8px;
+    padding-top:8px;
+    border-top:1px solid rgba(255,255,255,0.1);
+}
+
+.reaction{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    background:rgba(255,255,255,0.15);
+    border-radius:12px;
+    padding:4px 8px;
+    font-size:14px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    user-select:none;
+}
+
+.reaction:hover{
+    background:rgba(255,255,255,0.25);
+    transform:scale(1.1);
+}
+
+.reactionCount{
+    font-size:12px;
+    color:#ddd;
+}
+
+/* ================= SEEN INDICATOR ================= */
+
+.seenIndicator{
+    font-size:11px;
+    color:#8df7a7;
+    margin-top:6px;
+    display:flex;
+    align-items:center;
+    gap:4px;
+}
+
+/* ================= CONTEXT MENU ================= */
+
+.contextMenu{
+    position:fixed;
+    background:#222;
+    border:1px solid #444;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+    z-index:9998;
+    min-width:120px;
+    overflow:hidden;
+    animation:slideUp 0.2s ease;
+}
+
+.contextMenuItem{
+    padding:12px 16px;
+    cursor:pointer;
+    font-size:14px;
+    transition:background 0.2s ease;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    border-bottom:1px solid #333;
+}
+
+.contextMenuItem:last-child{
+    border-bottom:none;
+}
+
+.contextMenuItem:hover{
+    background:#ff2f68;
+    color:white;
+}
+
+/* ================= REACTION PICKER ================= */
+
+.reactionPicker{
+    position:fixed;
+    background:#222;
+    border:1px solid #444;
+    border-radius:12px;
+    padding:8px;
+    display:flex;
+    gap:4px;
+    box-shadow:0 4px 16px rgba(0,0,0,0.6);
+    z-index:9998;
+    animation:slideUp 0.2s ease;
+}
+
+.reactionEmoji{
+    width:36px;
+    height:36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:20px;
+    border-radius:8px;
+    transition:all 0.2s ease;
+}
+
+.reactionEmoji:hover{
+    background:#444;
+    transform:scale(1.2);
 }
 
 /* ================= INPUT ================= */
@@ -275,7 +438,20 @@ button:hover{
 
     }
 
-}.onlineCount{
+}
+
+@keyframes slideUp{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.onlineCount{
 
     margin-top:6px;
 
@@ -285,7 +461,9 @@ button:hover{
 
     font-weight:bold;
 
-}.typingIndicator{
+}
+
+.typingIndicator{
 
     color:#9b9b9b;
 
@@ -295,7 +473,9 @@ button:hover{
 
     margin-bottom:10px;
 
-}.typingIndicator{
+}
+
+.typingIndicator{
 
     height:24px;
 
@@ -313,7 +493,9 @@ button:hover{
 
     background:#0b0b0b;
 
-}.avatar{
+}
+
+.avatar{
 
     width:42px;
     height:42px;
@@ -339,7 +521,9 @@ button:hover{
 
     display:block;
 
-}.chatImage{
+}
+
+.chatImage{
 
     width:260px;
 
@@ -351,7 +535,9 @@ button:hover{
 
     display:block;
 
-}#imageBtn{
+}
+
+#imageBtn{
 
     width:60px;
 
@@ -370,20 +556,25 @@ button:hover{
 }
 
 .imageViewer{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.9);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:9999;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.9);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
 }
-.imageViewer.show{display:flex;}
+
+.imageViewer.show{
+    display:flex;
+}
+
 #viewerImage{
-max-width:90vw;
-max-height:90vh;
-border-radius:16px;
+    max-width:90vw;
+    max-height:90vh;
+    border-radius:16px;
 }
+
 /* ================= IMAGE VIEWER ================= */
 
 .imageViewer{
